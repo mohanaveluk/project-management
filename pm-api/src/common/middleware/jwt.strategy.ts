@@ -28,7 +28,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     
     const user = await this.userRepository.findOne({
-      where: { id: payload.sub }
+      where: { id: payload.sub },
+      relations: ['role']
     });
 
     if (!user) {
@@ -36,7 +37,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     const role = await this.roleRepository.findOne({
-      where: { guid: user.role_id }
+      where: { guid: user.role_guid }
     });
     
     //const user = {email: "gcp@gmail.com", guid: "12345", first_name: "gcp", last_name: "study"};
@@ -46,7 +47,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       uguid: user.id,
       firstName: user.first_name,
       lastName: user.last_name,
-      role: role !== null && role !== undefined ? role.name : ''
+      role: role !== null && role !== undefined ? role.name : '',
+      organizationId: user.organizationId || null,
     };
   }
 }

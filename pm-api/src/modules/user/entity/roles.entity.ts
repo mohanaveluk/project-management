@@ -12,8 +12,8 @@ export class RoleEntity {
   @Column({nullable: false, length: 100})
   name: string;
 
-  @Column({nullable: false, length: 1})
-  is_active: string;
+  @Column({nullable: false, default: 1})
+  is_active: number;
 
   @OneToMany(() => User, (user) => user.role)
   users: User[];

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 import { PrimaryGeneratedColumn } from 'typeorm';
 import { Alias } from 'typeorm/query-builder/Alias';
 
@@ -63,7 +63,64 @@ export class RegisterDto {
     example: 'ABC Chennal',
     description: 'User organisation name',
   })
+  @IsOptional()
   major: string;
+
+  @ApiProperty({
+    example: '1990-01-15',
+    description: 'Date of birth',
+  })
+  @IsOptional()
+  @IsString()
+  dob?: string;
+
+  @ApiProperty({
+    example: 'Senior Software Engineer',
+    description: 'Job position',
+  })
+  @IsOptional()
+  @IsString()
+  position?: string;
+
+  @ApiProperty({
+    example: 'New York, NY',
+    description: 'Work location',
+  })
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @ApiProperty({
+    example: 'manager@company.com',
+    description: 'Reports to (manager email or ID)',
+  })
+  @IsOptional()
+  @IsString()
+  report_to?: string;
+
+  @ApiProperty({
+    example: 'Jane Smith, John Doe',
+    description: 'Team members or colleagues working with',
+  })
+  @IsOptional()
+  @IsString()
+  worksWith?: string;
+
+  @ApiProperty({
+    example: 'Project Alpha',
+    description: 'Current project name',
+  })
+  @IsOptional()
+  @IsString()
+  projectName?: string;
+
+  @ApiProperty({
+    example: 'Project Alpha, Project Beta, Project Gamma',
+    description: 'List of projects worked on',
+  })
+  @IsOptional()
+  @IsString()
+  projectsWorkedOn?: string;
 
   @ApiProperty({
     example: new Date(),
@@ -95,4 +152,6 @@ export class RegisterDto {
   @IsOptional()
   role_guid: string;
 
+  @ApiProperty({example: '3rpfoe78-ba2d-4c72-923f-97398pomnh360', description: 'OrgacnizationId', required: true, nullable: false, name: 'organization_id'})
+  OrganizationId: string;
 }

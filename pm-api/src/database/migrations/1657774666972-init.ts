@@ -32,9 +32,9 @@ export class init1657774666972 implements MigrationInterface {
           },
           {
             name: 'is_active',
-            type: 'boolean',
+            type: 'int',
             isNullable: false,
-            default: true,
+            default: 1,
           }          
         ],
       }),
@@ -44,9 +44,14 @@ export class init1657774666972 implements MigrationInterface {
     //applications
     await queryRunner.query(`
           INSERT INTO roles (name, guid) VALUES 
-          ('user',    '7a7d386d-ba2d-4c72-923f-973821bc048d')
-          ,('admin',   'd5306fc7-fffb-413c-bd4e-5683a952f2a5')
-          ,('manager', 'bb12db75-107c-41d0-9a7a-6ed3f52088a4');
+          ('Approver',         'b7488c81-1a2b-41b1-9f04-b101dc989075')
+          ,('Manager',          '31501ab9-d508-4aea-8046-f92327efe1b3')
+          ,('SuperAdmin',       '70ebd45b-b0b1-41cf-8e19-53caf36be1c3')
+          ,('OrganizationAdmin','ed12a0c4-0c16-4737-99d0-f15f6446f45d')
+          ,('User',             '921db096-14a2-424d-bb7c-afd9eaee3022')
+          ,('Vendor',           'd2a54247-3215-4e7c-8eda-754c314b2f33')
+          ,('Viewer',           '631dfd33-e742-4c01-b6c4-a52c3846d47d')
+          ;
           `);
     
   }

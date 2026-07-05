@@ -17,13 +17,15 @@ export class TokenService {
   ) {}
 
   async generateTokens(user: User) {
-    
-    const payload = { 
-        sub: user.id, 
+
+    const payload = {
+        sub: user.id,
         email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,
         username: user.first_name + ' ' + user.last_name,
+        organizationId: user.organizationId || null,
+        role: user.role || null,
       };
 
     const accessToken = this.jwtService.sign(payload);
@@ -45,6 +47,9 @@ export class TokenService {
         avatar: user.profile_image,
         username: user.first_name + ' ' + user.last_name,
         identity: user.position || user.first_name + ' ' + user.last_name, // Use major or organisation_name as identity
+        roleName: user.role?.name,
+        role_id: user.role_guid,
+        organizationId: user.organizationId
       } 
     };
   }

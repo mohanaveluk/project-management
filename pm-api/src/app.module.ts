@@ -1,6 +1,7 @@
 import { UserService } from './modules/user/user.service';
 import { UserController } from './modules/user/user.controller';
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -15,6 +16,14 @@ import { ContactModule } from './modules/contact/contact.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { BlogModule } from './modules/blog/blog.module';
 import { CountryModule } from './modules/country/country.module';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { SubscriptionPlanModule } from './modules/subscription-plan/subscription-plan.module';
+import { OrganizationSubscriptionModule } from './modules/organization-subscription/organization-subscription.module';
+import { PaymentModule } from './modules/payment/payment.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { SubscriptionEnforcementGuard } from './common/guards/subscription-enforcement.guard';
+import { OrganizationSubscription } from './modules/organization-subscription/entity/organization-subscription.entity';
+import { User } from './modules/user/entity/user.entity';
 
 
 @Module({
@@ -29,6 +38,7 @@ import { CountryModule } from './modules/country/country.module';
       inject: [ConfigService],
       useFactory: typeOrmConfig,
     }),
+    TypeOrmModule.forFeature([OrganizationSubscription, User]),
     CommonModule,
     AuthModule,
     AuditModule,
@@ -36,17 +46,24 @@ import { CountryModule } from './modules/country/country.module';
     ContactModule,
     ChatModule,
     BlogModule,
-    CountryModule
+    CountryModule,
+    OrganizationModule,
+    SubscriptionPlanModule,
+    OrganizationSubscriptionModule,
+    PaymentModule,
+    DashboardModule,
   ],
   controllers: [
     UserController,
-    AppController ],
+    AppController,
+  ],
   providers: [
     UserService,
-    AppService],
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: SubscriptionEnforcementGuard,
+    },
+  ],
 })
-export class AppModule {
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer.apply(ClinicContextMiddleware).forRoutes('*');
-  // }
-}
+export class AppModule {}
