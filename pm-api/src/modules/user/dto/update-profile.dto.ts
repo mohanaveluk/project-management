@@ -115,4 +115,62 @@ export class UpdateProfileDto {
   @IsString()
   @MinLength(2)
   country?: string;
+
+  // -------- Professional Fields --------
+
+  @ApiProperty({
+    example: '1990-01-15',
+    description: 'Date of birth',
+  })
+  @IsOptional()
+  @IsString()
+  dob?: string;
+
+  @ApiProperty({
+    example: 'Senior Software Engineer',
+    description: 'Job position',
+  })
+  @IsOptional()
+  @IsString()
+  position?: string;
+
+  @ApiProperty({
+    example: 'New York, NY',
+    description: 'Work location',
+  })
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @ApiProperty({
+    example: 'manager@company.com',
+    description: 'Reports to (manager email or ID)',
+  })
+  @IsOptional()
+  @IsString()
+  report_to?: string;
+
+  @ApiProperty({
+    example: 'Jane Smith, John Doe',
+    description: 'Team members or colleagues working with',
+  })
+  @IsOptional()
+  @IsString()
+  worksWith?: string;
+
+  @ApiProperty({
+    example: 'Project Alpha',
+    description: 'Current project name',
+  })
+  @IsOptional()
+  @IsString()
+  projectName?: string;
+
+  @ApiProperty({
+    example: 'Project Alpha, Project Beta, Project Gamma',
+    description: 'List of projects worked on',
+  })
+  @IsOptional()
+  @IsString()
+  projectsWorkedOn?: string;
 }

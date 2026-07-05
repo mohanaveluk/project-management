@@ -3,6 +3,7 @@ import { PasswordArchive } from './password-archive.entity';
 import { RoleEntity } from './roles.entity';
 import { UserLoginHistory } from 'src/modules/auth/entity/user-login-history.entity';
 import { RefreshToken } from './refresh-token.entity';
+import { Organization } from 'src/modules/organization/entity/organization.entity';
 
 @Entity('user')
 export class User {
@@ -73,6 +74,16 @@ export class User {
 
   @Column({ nullable: true })
   role_id: string;
+
+  @Column({ nullable: true })
+  role_guid: string;
+
+  @Column({ nullable: true })
+  organizationId: string;
+
+  @ManyToOne(() => Organization, (org) => org.users, { nullable: true })
+  @JoinColumn({ name: 'organizationId' })
+  organization: Organization;
 
   @Column({ nullable: true })
   profile_image: string;

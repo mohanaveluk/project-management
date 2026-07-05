@@ -43,14 +43,18 @@ import { User } from '../user/entity/user.entity';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ToggleUserStatusDto } from '../user/dto/toggle-user-status.dto';
 import { ForgotPasswordDto, UpdatePasswordDto, VerifyResetCodeDto } from './dto/forgot-password.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @Post('register')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('OrganizationAdmin')
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({ status: 201, description: 'User successfully registered' })
   //@ApiResponse({ status: 400, description: 'Bad request - validation error or email exists' })
